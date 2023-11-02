@@ -13,8 +13,8 @@ const Test = (props: Props) => {
     return (
         <>
             <Index current={props.pid} />
-            <div className="tracking-wrap grid grid-cols-1 sm:grid-cols-2 p-2">
-                <div className="tracking kuroneko mx-3">
+            <div className="tracking-wrap grid grid-cols-1 lg:grid-cols-2 p-2">
+                <div className="tracking kuroneko mx-3 mb-2">
                     <div className="kuroneko-header">
                         <div className="title">
                             ヤマト運輸
