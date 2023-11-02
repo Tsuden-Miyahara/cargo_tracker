@@ -6,15 +6,14 @@ import './tracking.scss';
 type Props = {
     kuro: string;
     saga: string;
+    pid: string | undefined;
 };
 
 const Test = (props: Props) => {
     return (
         <>
-            <Index />
-
+            <Index current={props.pid} />
             <div className="tracking-wrap grid grid-cols-1 sm:grid-cols-2 p-2">
-
                 <div className="tracking kuroneko mx-3">
                     <div className="kuroneko-header">
                         <div className="title">
@@ -32,7 +31,6 @@ const Test = (props: Props) => {
                     </div>
                     <div dangerouslySetInnerHTML={{__html: props.saga}} className="tracking-invoice-block"></div>
                 </div>
-
             </div>
         </>
     )
@@ -45,6 +43,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { pid } = context.query;
     const [kuro, saga] = await Promise.all([Kuroneko(pid as string), Sagawa(pid as string)]);
     //console.log(src);
-    const props: Props = { kuro, saga };
+    const props: Props = { pid: pid as (string | undefined), kuro, saga };
     return { props };
 };

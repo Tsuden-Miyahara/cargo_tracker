@@ -2,9 +2,13 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const Index = () => {
+export type Props = {
+    current: string | undefined
+};
+
+const Index = (props: Props) => {
     const router = useRouter();
-    const [pid, setPid] = useState<string>('');
+    const [pid, setPid] = useState<string>(props.current || '');
     const tracking = () => {
         if (!pid) return;
         router.push({
@@ -24,14 +28,13 @@ const Index = () => {
                     onChange={(e) => {
                         const { value: v } = e.target;
                         if(v.match(/^\d*$/)) setPid(v);
-                    }} /*変更時keywordに値をセット*/
+                    }}
                 />
 
-                {/* ボタン */}
                 <button 
                     className="px-3 ml-2 text-gray-800 disabled:text-gray-300 transition-colors"
                     onClick={tracking}
-                    disabled={!pid}>    {/*入力項目が未入力の場合、非活性*/}
+                    disabled={!pid}>
                     SEARCH
                 </button>
             </div>
