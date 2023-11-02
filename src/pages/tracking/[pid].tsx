@@ -23,7 +23,7 @@ const Test = (props: Props) => {
                     <div dangerouslySetInnerHTML={{__html: props.kuro}} className="tracking-invoice-block"></div>
                 </div>
 
-                <div className="tracking sagawa mx-3">
+                <div className="tracking sagawa mx-3 mb-2">
                     <div className="sagawa-header">
                         <div className="title">
                             佐川急便
