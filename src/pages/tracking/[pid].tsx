@@ -14,7 +14,7 @@ const Test = (props: Props) => {
     return (
         <>
             <Index current={props.pid} />
-            <div className="tracking-wrap grid grid-cols-1 lg:grid-cols-2 p-2">
+            <div className="tracking-wrap grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 p-2">
                 <div className="tracking kuroneko mx-3 mb-2">
                     <div className="kuroneko-header">
                         <a className="title" target="_blank" href="https://www.kuronekoyamato.co.jp/">
