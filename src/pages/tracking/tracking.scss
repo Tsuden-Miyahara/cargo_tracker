@@ -1,0 +1,122 @@
+
+
+
+.tracking-wrap {
+    .tracking {
+        --color: #4a4a4a;
+        background: #fff;
+        box-shadow: 0px 1px 3px var(--color);
+        color: var(--color);
+        &-invoice-block {
+            padding: 1em 1.5em;
+            &-state {
+                background: #fff;
+                box-shadow: 0px 1px 3px var(--color);
+                padding: 1em .5em;
+                margin: 0 0 1em;
+                &.is-complete-grey {
+                    background: #d5eeff;
+                }
+                &.is-urgent-red {
+                    background: #fce5e7;
+                }
+                &-title {
+                    font-size: 1.3em;
+                }
+                dl {
+                    display: grid;
+                    grid-template-columns: 8.5em 1fr;
+                    padding: .5em 1em .25em;
+                    white-space: nowrap;
+                    dt {
+                        text-align: right;
+                    }
+                }
+            }
+            &-summary {
+                padding: 1em;
+                > ul > li {
+                    display: grid;
+                    grid-template-columns: 8.5em 1fr;
+                    .item {
+                        display: block;
+                        text-align: right;
+                    }
+                    .data {
+                        display: block;
+                        padding: 0 1em;
+                    }
+                }
+            }
+            &-detail {
+                > ol > li {
+                    border: 1px solid;
+                    border-radius: .5em;
+                    display: block;
+                    margin: .5em 0;
+                    padding: .5em;
+                }
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                font-size: .85em;
+                text-align: left;
+                width: 100%;
+                th {
+                    background: #f4f4f0;
+                    font-weight: bold;
+                    &.cell-w {
+                        width: 12em;
+                    }
+                }
+                th, td {
+                    border: 1px solid #ccc;
+                    padding: .25em .5em;
+                }
+            }
+        }
+    }
+    .kuroneko {
+        --logourl: url('/logo/kuroneko.svg');
+        --fill: #000;
+        --bg: #fccf00;
+    }
+    .sagawa {
+        --logourl: url('/logo/sagawa.svg');
+        --fill: #39489d;
+        --bg: #f0f0f0;
+
+    }
+    .kuroneko, .sagawa {
+        &-header {
+            background: var(--bg);
+            font-size: 1.6em;
+            font-weight: bold;
+            height: 8em;
+            position: relative;
+            &::before {
+                content: '';
+                background: var(--fill);
+                display: block;
+                mask-image: var(--logourl);
+                mask-repeat: no-repeat;
+                mask-position: center;
+                mask-size: cover;
+                pointer-events: none;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+            .title {
+                align-items: center;
+                color: #fff;
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                position: relative;
+                text-shadow: 0 0 3px var(--fill), 0 0 5px var(--fill);
+            }
+        }
+    }
+}
