@@ -18,13 +18,17 @@ const Index = (props: Props) => {
     return (
         
         <div className="text-center py-3 text-xl flex align-middle items-center justify-center">
-            <div className="p-4 bg-white shadow-md rounded">
+            <form
+                className="p-4 bg-white shadow-md rounded"
+                onSubmit={e => {
+                    e.preventDefault();
+                    tracking();
+                }}>
                 <input 
                     type="text"
                     placeholder="TRACKING NUMBER"
                     className="border border-solid border-gray-400 rounded px-2 py-1 focus:outline-none"
                     value={pid}
-                    pattern=""
                     onChange={(e) => {
                         const { value: v } = e.target;
                         if(v.match(/^[\d\-a-z]*$/i)) setPid(v);
@@ -33,11 +37,14 @@ const Index = (props: Props) => {
 
                 <button 
                     className="px-3 ml-2 text-gray-800 disabled:text-gray-300 transition-colors"
-                    onClick={tracking}
+                    type="submit"
+                    onSubmit={e => {
+                        e.preventDefault();
+                    }}
                     disabled={!pid}>
                     SEARCH
                 </button>
-            </div>
+            </form>
         </div>
     )
     // return <pre>{props.domstring}</pre>
