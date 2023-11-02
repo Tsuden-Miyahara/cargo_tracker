@@ -27,7 +27,7 @@ const Index = (props: Props) => {
                     pattern=""
                     onChange={(e) => {
                         const { value: v } = e.target;
-                        if(v.match(/^\d*$/)) setPid(v);
+                        if(v.match(/^[\d\-a-z]*$/i)) setPid(v);
                     }}
                 />
 

@@ -102,3 +102,43 @@ export const Sagawa = async (pid: string): Promise<string> => {
     });
     return result;
 };
+
+export const Nihon = async (pid: string): Promise<string> => {
+    const url = `https://trackings.post.japanpost.jp/services/srv/search/?requestNo1=${pid}&requestNo2=&requestNo3=&requestNo4=&requestNo5=&requestNo6=&requestNo7=&requestNo8=&requestNo9=&requestNo10=&search.x=124&search.y=30&startingUrlPatten=&locale=ja`;
+    const options: http.RequestOptions = {
+        hostname: 'trackings.post.japanpost.jp',
+        path: url,
+        method: 'GET',
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
+        }
+    }
+    const result: string = await new Promise((resolve, reject) => {
+        try {
+            let str = '';
+            const req = https.request(options, res => {
+                res.on('data', (buf: Buffer) => {
+                    str += buf.toString('utf8');//iconv.decode(buf, 'Shift_JIS');
+                });
+            });
+            req.on('close', () => {
+                // console.log(req.getHeaders())
+                const doc = new JSDOM(str).window.document;
+                const con = doc.querySelector('.indent');
+                if (con) {
+                    const hts = [...con.querySelectorAll('.beige_box, .tableType01')].slice(0, 4).map(e => e.outerHTML);
+                    const content = `<div>${hts.join('\n')}</div>`;
+                    resolve(content)
+                } else {
+                    resolve('<div></div>')
+                }
+            })
+            req.on('error', reject);
+            req.end();
+        }
+        catch(e) {
+            reject(e);
+        }
+    });
+    return result;
+};

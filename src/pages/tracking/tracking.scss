@@ -75,6 +75,13 @@
                     padding: .25em .5em;
                 }
             }
+            .beige_box {
+                background: #f4f4f0;
+                border: 1px solid #ccc;
+                margin: 1.5em 0 .25em;
+                padding: .5em;
+                text-align: center;
+            }
         }
     }
     .kuroneko {
@@ -86,11 +93,16 @@
         --logourl: url('/logo/sagawa.svg');
         --fill: #39489d;
         --bg: #f0f0f0;
-
     }
-    .kuroneko, .sagawa {
+    .nihon_yuubin {
+        --logourl: url('/logo/nihon_yuubin.svg');
+        --fill: #c40f39;
+        --bg: #f0f0f0;
+    }
+    .kuroneko, .sagawa, .nihon_yuubin {
         &-header {
             background: var(--bg);
+            cursor: pointer;
             font-size: 1.6em;
             font-weight: bold;
             height: 8em;
@@ -102,11 +114,16 @@
                 mask-image: var(--logourl);
                 mask-repeat: no-repeat;
                 mask-position: center;
-                mask-size: cover;
+                mask-size: 100%;
                 pointer-events: none;
                 position: absolute;
+                transition: mask-size .2s;
                 height: 100%;
                 width: 100%;
+            }
+            &:hover::before {
+                mask-size: 150%;
+                transition: mask-size .2s .2s;
             }
             .title {
                 align-items: center;
