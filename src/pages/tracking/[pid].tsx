@@ -41,7 +41,10 @@ export default Test;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { pid } = context.query;
-    const [kuro, saga] = await Promise.all([Kuroneko(pid as string), Sagawa(pid as string)]);
+    const [kuro, saga] = await Promise.all([
+        Kuroneko(pid as string),
+        Sagawa(pid as string)
+    ]);
     //console.log(src);
     const props: Props = { pid: pid as (string | undefined), kuro, saga };
     return { props };
