@@ -23,7 +23,7 @@ export const Kuroneko = async (pid: string): Promise<string> => {
             'Content-Type': 'application/x-www-form-urlencoded',
             //'Content-Length': Buffer.byteLength(params.getBuffer())
         }
-    }
+    };
     const result: string = await new Promise((resolve, reject) => {
         try {
             let str = '';
@@ -43,8 +43,8 @@ export const Kuroneko = async (pid: string): Promise<string> => {
                 resolve(content)
             })
             req.on('error', reject);
-            req.write(params.toString())
-            req.end()
+            req.write(params.toString());
+            req.end();
             // params.pipe(req);
         }
         catch(e) {
@@ -63,7 +63,7 @@ export const Sagawa = async (pid: string): Promise<string> => {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
         }
-    }
+    };
     const result: string = await new Promise((resolve, reject) => {
         try {
             let str = '';
@@ -112,7 +112,7 @@ export const Nihon = async (pid: string): Promise<string> => {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36'
         }
-    }
+    };
     const result: string = await new Promise((resolve, reject) => {
         try {
             let str = '';
@@ -135,6 +135,63 @@ export const Nihon = async (pid: string): Promise<string> => {
             })
             req.on('error', reject);
             req.end();
+        }
+        catch(e) {
+            reject(e);
+        }
+    });
+    return result;
+};
+
+export const Seino = async (pid: string): Promise<string> => {
+    const url = 'https://track.seino.co.jp/kamotsu/GempyoNoShokai.do';
+    const params = new URLSearchParams();
+    params.append('questionnaire', '');
+    params.append('action', '　検 索　');// "　検 索　", "%81%40%8C%9F+%8D%F5%81%40"
+    params.append('GNPNO1', pid);
+    for (const n of [...Array(8).fill(0).map((_, i) => i + 2)]) {
+        params.append(`GNPNO${n}`, '');
+    }
+    params.append('GNPNOA', '');
+    params.append('niokuriBannerFlag', '');
+    params.append('tdkNameBannerFlag', '');
+    params.append('autoShowMapFlg', '1');
+    const options: http.RequestOptions = {
+        hostname: 'track.seino.co.jp',
+        path: url,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            //'Content-Length': Buffer.byteLength(params.getBuffer())
+        }
+    };
+    const result: string = await new Promise((resolve, reject) => {
+        try {
+            let str = '';
+            const req = https.request(options, res => {
+                res.on('data', buf => {
+                    str += iconv.decode(buf, 'Shift_JIS');
+                });
+            });
+            req.on('close', () => {
+                // console.log(req.getHeaders())
+                const doc = new JSDOM(str).window.document;
+                for (const e of doc.querySelectorAll('input')) {
+                    e.remove();
+                }
+                for (const e of doc.querySelectorAll('*')) {
+                    e.removeAttribute('style');
+                }
+                const stt = doc.querySelector('#divGempyoNo')?.outerHTML || '';
+                const tbl = [...doc.querySelectorAll('table.base[class*="package"]')].map(e => e.outerHTML);;
+                const content = [stt, ...tbl].join('\n');
+                // console.log(str)
+                resolve(content)
+            })
+            req.on('error', reject);
+            req.write(params.toString());
+            req.end();
+            // params.pipe(req);
         }
         catch(e) {
             reject(e);

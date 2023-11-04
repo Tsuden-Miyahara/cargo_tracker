@@ -99,7 +99,12 @@
         --fill: #c40f39;
         --bg: #f0f0f0;
     }
-    .kuroneko, .sagawa, .nihon_yuubin {
+    .seino {
+        --logourl: url('/logo/seino.svg');
+        --fill: #ff1300;
+        --bg: #f0f0f0;
+    }
+    .kuroneko, .sagawa, .nihon_yuubin, .seino {
         &-header {
             background: var(--bg);
             cursor: pointer;

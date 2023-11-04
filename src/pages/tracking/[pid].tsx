@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { Kuroneko, Sagawa, Nihon } from '@/myutil';
+import { Kuroneko, Sagawa, Nihon, Seino } from '@/myutil';
 import Index from './index';
 import './tracking.scss';
 
@@ -7,6 +7,7 @@ type Props = {
     kuro: string;
     saga: string;
     niho: string;
+    sein: string;
     pid: string | undefined;
 };
 
@@ -41,6 +42,15 @@ const Test = (props: Props) => {
                     </div>
                     <div dangerouslySetInnerHTML={{__html: props.niho}} className="tracking-invoice-block"></div>
                 </div>
+
+                <div className="tracking seino mx-3 mb-2">
+                    <div className="nihon_yuubin-header">
+                        <a className="title" target="_blank" href="https://www.seino.co.jp/seino/">
+                            西濃運輸
+                        </a>
+                    </div>
+                    <div dangerouslySetInnerHTML={{__html: props.sein}} className="tracking-invoice-block"></div>
+                </div>
             </div>
         </>
     )
@@ -51,12 +61,13 @@ export default Test;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { pid } = context.query;
-    const [kuro, saga, niho] = await Promise.all([
-        Kuroneko(pid as string),
-        Sagawa(pid as string),
-        Nihon(pid as string)
-    ]);
+    const [kuro, saga, niho, sein] = await Promise.all([
+        Kuroneko,
+        Sagawa,
+        Nihon,
+        Seino
+    ].map(f => f(pid as string)));
     //console.log(src);
-    const props: Props = { pid: pid as (string | undefined), kuro, saga, niho };
+    const props: Props = { pid: pid as (string | undefined), kuro, saga, niho, sein };
     return { props };
 };
