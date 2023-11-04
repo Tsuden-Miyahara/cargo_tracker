@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const Header = () => {
   return (
-    <header className="border-b flex gap-4 items-center h-14 w-full px-4 bg-white fixed top-0 z-10">
+    <header className="shadow-sm shadow-slate-400 border-b flex gap-4 items-center h-14 w-full px-4 bg-white fixed top-0 z-10">
         <h1>
             <Link href="/">
                 Home
